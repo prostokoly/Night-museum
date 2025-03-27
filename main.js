@@ -120,12 +120,18 @@ function main() {
 
   pictureTextures.forEach((url, index) => {
     const texture = new THREE.TextureLoader().load(url);
-    const pictureMaterial = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+    const pictureMaterial = new THREE.MeshStandardMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+      emissive: 0x000000
+    });
     const picture = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1), pictureMaterial);
 
     const pos = picturePositions[index];
     picture.position.set(pos.x, pos.y, pos.z);
     picture.rotation.y = pos.rotationY;
+    picture.castShadow = true;
+    picture.receiveShadow = true;
     scene.add(picture);
 
     pictures.push(picture);
